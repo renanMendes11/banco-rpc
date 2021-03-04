@@ -2,12 +2,15 @@ package com.gugawag.rpc.banco;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BancoServiceServer extends UnicastRemoteObject implements BancoServiceIF {
 
     private Map<String, Double> saldoContas;
+    private List<Conta> contas = new ArrayList<>();
 
     public BancoServiceServer() throws RemoteException {
         saldoContas = new HashMap<>();
@@ -26,4 +29,10 @@ public class BancoServiceServer extends UnicastRemoteObject implements BancoServ
         return saldoContas.size();
     }
 
+    @Override
+    public String adicionarConta(String numero, double saldo) throws RemoteException {
+        Conta novaConta = new Conta(numero, saldo);
+        contas.add(novaConta);
+        return novaConta.toString();
+    }
 }
